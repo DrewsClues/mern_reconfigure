@@ -1,13 +1,29 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
-
-;const path = require('path');
+const http = require("http");
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 8080; //Heroku should use whichever port is available
 
 const routes = require('./routes/api')
+
+
+
+//Ping this application
+setInterval(function() {
+    console.log("Pinging This application")
+    http.get("http://bankapptest.herokuapp.com/");
+}, 300000); // every 5 minutes (300000)
+
+//Ping the banking application
+setInterval(function() {
+    console.log("Pinging Banking application")
+    http.get("http://andrewthomasfsbankapplication.herokuapp.com/");
+}, 350000); // every 5 minutes (300000)
+
+
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/mern_bank', {
     useNewUrlParser: true,
